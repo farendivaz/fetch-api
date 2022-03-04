@@ -74,7 +74,13 @@ search.addEventListener("click", (e) => {
             const imdbID = this.dataset.imdbid;
             fetch(
               "https://www.omdbapi.com/?i=tt3896198&apikey=5ec28603&i=" + imdbID
-            );
+            )
+              .then((response) => response.json())
+              .then((movie) => {
+                const movieDetail = showMovieDetail(movie);
+                const modalBody = document.querySelector(".modal-body");
+                modalBody.innerHTML = movieDetail;
+              });
           });
         }
       }
@@ -100,15 +106,15 @@ function showMovieDetail(movie) {
                 <div class="col-md-3">
                     <img src=${movie.Poster} ${movie.Year} class="img-fluid">
                 </div>
-                                          <div class="col-md">
-                                              <ul class="list-group">
-                                                  <li class="list-group-item"><h4>${movie.Title}</h4></li>
-                                                  <li class="list-group-item"><strong>${movie.Director}:</strong></li>
-                                                  <li class="list-group-item"><strong>${movie.Actors}:</strong></li>
-                                                  <li class="list-group-item"><strong>${movie.Writer}:</strong></li>
-                                                  <li class="list-group-item"><strong>${movie.Plot}:</strong><br>cang</li>
-                                              </ul>
-                                          </div>
+                <div class="col-md">
+                  <ul class="list-group">
+                    <li class="list-group-item"><h4>${movie.Title}</h4></li>
+                    <li class="list-group-item"><strong>${movie.Director}:</strong></li>
+                    <li class="list-group-item"><strong>${movie.Actors}:</strong></li>
+                    <li class="list-group-item"><strong>${movie.Writer}:</strong></li>
+                    <li class="list-group-item"><strong>${movie.Plot}:</strong><br>cang</li>
+                  </ul>
+                </div>
               </div>
           </div>`;
 }
