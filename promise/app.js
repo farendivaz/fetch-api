@@ -66,6 +66,17 @@ search.addEventListener("click", (e) => {
         cards += showCards(movie);
         const movieContainer = document.querySelector(".movie-container");
         movieContainer.innerHTML = cards;
+        const modalDetailButton = document.querySelectorAll(
+          ".modal-detail-button"
+        );
+        for (let modal of modalDetailButton) {
+          modal.addEventListener("click", function () {
+            const imdbID = this.dataset.imdbid;
+            fetch(
+              "https://www.omdbapi.com/?i=tt3896198&apikey=5ec28603&i=" + imdbID
+            );
+          });
+        }
       }
     });
 });
@@ -77,8 +88,27 @@ function showCards(movie) {
                     <div class="card-body">
                         <h5 class="card-title">${movie.Title}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">${movie.Year}</h6>
-                        <a href="#" class="btn btn-primary modal-detail-button" data-bs-toggle="modal" data-bs-target="#movieDetailModal" data-imdbid=${movie.imdb}>Show Details</a>
+                        <a href="#" class="btn btn-primary modal-detail-button" data-bs-toggle="modal" data-bs-target="#movieDetailModal" data-imdbid=${movie.imdbID}>Show Details</a>
                     </div>
                 </div>
             </div>`;
+}
+
+function showMovieDetail(movie) {
+  return `<div class="container-fluid">
+            <div class="row>
+                <div class="col-md-3">
+                    <img src=${movie.Poster} ${movie.Year} class="img-fluid">
+                </div>
+                                          <div class="col-md">
+                                              <ul class="list-group">
+                                                  <li class="list-group-item"><h4>${movie.Title}</h4></li>
+                                                  <li class="list-group-item"><strong>${movie.Director}:</strong></li>
+                                                  <li class="list-group-item"><strong>${movie.Actors}:</strong></li>
+                                                  <li class="list-group-item"><strong>${movie.Writer}:</strong></li>
+                                                  <li class="list-group-item"><strong>${movie.Plot}:</strong><br>cang</li>
+                                              </ul>
+                                          </div>
+              </div>
+          </div>`;
 }
